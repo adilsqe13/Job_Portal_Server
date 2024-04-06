@@ -28,34 +28,30 @@ router.get('/get-all-openings', async (req, res) => {
     }
   });
   
-  //EDIT TASK
-//   router.put('/.netlify/functions/server/api/edit-task', async (req, res) => {
-//     const { taskId, priority, status } = req.body;
-//     try {
-//       if(status === 'completed'){
-//         await Task.updateOne({ _id: taskId }, { $set: { status: status, priority: priority, end_date: Date.now() } });
-//       }else{
-//         await Task.updateOne({ _id: taskId }, { $set: { status: status, priority: priority } });
-//       }
-//       res.json({ success: true });
-//     } catch (error) {
-//       console.log(error);
-//       res.json({ success: false });
-//     }
-//   });
+  //EDIT JOB DETAILS
+  router.put('/edit-job-details', fetchadmin, async (req, res) => {
+    const { jobId, designation, company, description, salary, location } = req.body;
+    try {
+        await Jobs.updateOne({ _id: jobId }, { $set: { designation, description, company, salary, location }});
+        res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false });
+    }
+  });
   
   
-  //DELETE TASK
-//   router.delete('/.netlify/functions/server/api/delete-task/:taskId', async (req, res) => {
-//     const taskId = req.params.taskId;
-//     try {
-//       await Task.deleteOne({ _id: taskId });
-//       res.json({ success: true });
-//     } catch (error) {
-//       console.log(error);
-//       res.json({ success: false });
-//     }
-//   });
+  //DELETE JOB
+  router.delete('/delete-job/:jobId', fetchadmin, async (req, res) => {
+    const jobId = req.params.jobId;
+    try {
+      await Jobs.deleteOne({ _id: jobId });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false });
+    }
+  });
   
 
 
